@@ -2,6 +2,10 @@ import os
 import shutil
 import configparser
 import ast
+# from datetime import datetime
+import time
+import locale
+import pyperclip
 
 
 PROGRAM_VERSION = "1.0.0"
@@ -61,7 +65,20 @@ def main():
     load_config()
     print(f"Current configuration: \n{config}")
 
+    locale.setlocale(locale.LC_ALL, "Russian_Russia.1251")
+
+    # date = datetime.now()
+    date = time.strftime("%d.%m.%y")
+    week_day = time.strftime("%a")
+    # print(f"{date} {week_day}")
+
+    if config["copy_date_to_clipboard"]:
+        pyperclip.copy(f"{date} {week_day}")
+
     
+
+
+
 
 
 if __name__ == "__main__":
