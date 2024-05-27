@@ -1,11 +1,10 @@
 import os
-import shutil
 import configparser
 import ast
-# from datetime import datetime
 import time
 import locale
 import pyperclip
+import subprocess
 
 
 PROGRAM_VERSION = "1.0.0"
@@ -89,9 +88,10 @@ def main():
             os.mkdir(dir_path)
         except Exception as er:
             print(er)
+            return
 
-    #open
-    
+    if config["open_directory"]:
+        subprocess.Popen(f"explorer {dir_path}")
 
 
 if __name__ == "__main__":
