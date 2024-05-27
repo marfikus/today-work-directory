@@ -67,18 +67,31 @@ def main():
 
     locale.setlocale(locale.LC_ALL, "Russian_Russia.1251")
 
-    # date = datetime.now()
     date = time.strftime("%d.%m.%y")
     week_day = time.strftime("%a")
-    # print(f"{date} {week_day}")
+    debug_print(f"{date} {week_day}")
 
     if config["copy_date_to_clipboard"]:
         pyperclip.copy(f"{date} {week_day}")
 
+    if not os.path.exists(config["path"]):
+        print(f"Path '{config['path']}' is not exists!")
+        return
+
+    dir_path = os.path.join(config["path"], date)
+    dir_path = os.path.normpath(dir_path)
+    debug_print(f"dir_path: '{dir_path}'")
+
+    if os.path.exists(dir_path):
+        print(f"Path '{dir_path}' is already exists!")
+    else:
+        try:
+            os.mkdir(dir_path)
+        except Exception as er:
+            print(er)
+
+    #open
     
-
-
-
 
 
 if __name__ == "__main__":
