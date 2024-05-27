@@ -3,11 +3,11 @@ import configparser
 import ast
 import time
 import locale
-import pyperclip
+# import pyperclip
 import subprocess
 
 
-PROGRAM_VERSION = "1.0.0"
+PROGRAM_VERSION = "1.1.0"
 
 CONFIG_FILE = "today_work_directory.ini"
 DEFAULT_CONFIG = {
@@ -59,6 +59,12 @@ def debug_print(msg):
         print(msg)
 
 
+# from: https://stackoverflow.com/questions/11063458/python-script-to-copy-text-to-clipboard/41029935#41029935
+def copy2clip(txt):
+    cmd = "echo " + txt.strip() + "|clip"
+    return subprocess.check_call(cmd, shell=True)
+
+
 def main():
     print(f"Program version: {PROGRAM_VERSION}")
     load_config()
@@ -68,10 +74,12 @@ def main():
 
     date = time.strftime("%d.%m.%y")
     week_day = time.strftime("%a")
-    debug_print(f"{date} {week_day}")
+    full_date = f"{date} {week_day}"
+    debug_print(full_date)
 
     if config["copy_date_to_clipboard"]:
-        pyperclip.copy(f"{date} {week_day}")
+        # pyperclip.copy(full_date)
+        copy2clip(full_date)
 
     if not os.path.exists(config["path"]):
         print(f"Path '{config['path']}' is not exists!")
